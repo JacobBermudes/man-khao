@@ -1,0 +1,32 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: manager-role
+rules:
+- apiGroups:
+  - db.buffalo.com
+  resources:
+  - mssqldatabases
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - db.buffalo.com
+  resources:
+  - mssqldatabases/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - db.buffalo.com
+  resources:
+  - mssqldatabases/status
+  verbs:
+  - get
+  - patch
+  - update

@@ -1,0 +1,6 @@
+apiVersion: db.buffalo.com/v1
+kind: MSSQLDatabase
+metadata:
+  name: test-db
+spec:
+  databaseName: mytestdb
