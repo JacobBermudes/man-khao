@@ -1,8 +1,7 @@
-# man-khao
-// TODO(user): Add simple overview of use/purpose
 
 ## Description
-// TODO(user): An in-depth paragraph about your project and overview of use
+
+CoW Operator for kubernetes
 
 ## Getting Started
 
