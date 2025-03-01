@@ -1,9 +1,9 @@
 apiVersion: db.buffalo.com/v1
-kind: MSSQLDatabase
+kind: SQLCow
 metadata:
   labels:
     app.kubernetes.io/name: man-khao
     app.kubernetes.io/managed-by: kustomize
-  name: mssqldatabase-sample
+  name: SQLCow_friend-sample
 spec:
   # TODO(user): Add fields here

@@ -5,12 +5,12 @@ metadata:
   labels:
     app.kubernetes.io/name: man-khao
     app.kubernetes.io/managed-by: kustomize
-  name: mssqldatabase-viewer-role
+  name: SQLCow-viewer-role
 rules:
 - apiGroups:
   - db.buffalo.com
   resources:
-  - mssqldatabases
+  - SQLCow
   verbs:
   - get
   - list
@@ -18,6 +18,6 @@ rules:
 - apiGroups:
   - db.buffalo.com
   resources:
-  - mssqldatabases/status
+  - SQLCow/status
   verbs:
   - get

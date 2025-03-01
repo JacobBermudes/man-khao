@@ -1,65 +1,54 @@
-/*
-Copyright 2025.
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
-
 package v1
 
 import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-// EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
-// NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
-
-// MSSQLDatabaseSpec defines the desired state of MSSQLDatabase
-type MSSQLDatabaseSpec struct {
-	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
-
-	// Foo is an example field of MSSQLDatabase. Edit mssqldatabase_types.go to remove/update
+// SQLCowSpec defines the desired state of SQLCow
+type SQLCowSpec struct {
+	// Template is the name of the template database to snapshot (empty for no snapshot)
+	Template string `json:"template,omitempty"`
+	// User is the user identifier for organizing databases
+	User string `json:"user"`
+	// DatabaseName is the name of the new database to create
 	DatabaseName string `json:"databaseName"`
 }
 
-// MSSQLDatabaseStatus defines the observed state of MSSQLDatabase
-type MSSQLDatabaseStatus struct {
-	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
-	FileCreated bool `json:"fileCreated,omitempty"`
+// SQLCowStatus defines the observed state of SQLCow
+type SQLCowStatus struct {
+	// SnapshotName is the name of the created snapshot (if applicable)
+	SnapshotName string `json:"snapshotName,omitempty"`
+	// PVCName is the name of the created PVC
+	PVCName string `json:"pvcName,omitempty"`
+	// MountPath is the path where the database is mounted
+	MountPath string `json:"mountPath,omitempty"`
+	// Mounted indicates if the volume is mounted
+	Mounted bool `json:"mounted,omitempty"`
+	// DatabaseCreated indicates if the database is attached
+	DatabaseCreated bool `json:"databaseCreated,omitempty"`
 }
 
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
 
-// MSSQLDatabase is the Schema for the mssqldatabases API
-type MSSQLDatabase struct {
+// SQLCow is the Schema for the sqlcows API
+type SQLCow struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec   MSSQLDatabaseSpec   `json:"spec,omitempty"`
-	Status MSSQLDatabaseStatus `json:"status,omitempty"`
+	Spec   SQLCowSpec   `json:"spec,omitempty"`
+	Status SQLCowStatus `json:"status,omitempty"`
 }
 
 //+kubebuilder:object:root=true
 
-// MSSQLDatabaseList contains a list of MSSQLDatabase
-type MSSQLDatabaseList struct {
+// SQLCowList contains a list of SQLCow
+type SQLCowList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []MSSQLDatabase `json:"items"`
+	Items           []SQLCow `json:"items"`
 }
 
 func init() {
-	SchemeBuilder.Register(&MSSQLDatabase{}, &MSSQLDatabaseList{})
+	SchemeBuilder.Register(&SQLCow{}, &SQLCowList{})
 }

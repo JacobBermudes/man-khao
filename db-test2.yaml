@@ -1,11 +1,11 @@
 apiVersion: db.buffalo.com/v1
 kind: SQLCow
 metadata:
-  name: beef-with-rice
+  name: beef-with-potato
   namespace: man-khao-system
   labels:
     app: mssql
 spec:
-  template: ""
-  user: "user1"
-  databaseName: "db1"
+  template: "db1"
+  user: "user2"
+  databaseName: "db3"

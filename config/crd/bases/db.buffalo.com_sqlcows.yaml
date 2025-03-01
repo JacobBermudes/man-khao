@@ -4,20 +4,20 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.14.0
-  name: mssqldatabases.db.buffalo.com
+  name: sqlcows.db.buffalo.com
 spec:
   group: db.buffalo.com
   names:
-    kind: MSSQLDatabase
-    listKind: MSSQLDatabaseList
-    plural: mssqldatabases
-    singular: mssqldatabase
+    kind: SQLCow
+    listKind: SQLCowList
+    plural: sqlcows
+    singular: sqlcow
   scope: Namespaced
   versions:
   - name: v1
     schema:
       openAPIV3Schema:
-        description: MSSQLDatabase is the Schema for the mssqldatabases API
+        description: SQLCow is the Schema for the sqlcows API
         properties:
           apiVersion:
             description: |-
@@ -37,23 +37,41 @@ spec:
           metadata:
             type: object
           spec:
-            description: MSSQLDatabaseSpec defines the desired state of MSSQLDatabase
+            description: SQLCowSpec defines the desired state of SQLCow
             properties:
               databaseName:
-                description: Foo is an example field of MSSQLDatabase. Edit mssqldatabase_types.go
-                  to remove/update
+                description: DatabaseName is the name of the new database to create
+                type: string
+              template:
+                description: Template is the name of the template database to snapshot
+                  (empty for no snapshot)
+                type: string
+              user:
+                description: User is the user identifier for organizing databases
                 type: string
             required:
             - databaseName
+            - user
             type: object
           status:
-            description: MSSQLDatabaseStatus defines the observed state of MSSQLDatabase
+            description: SQLCowStatus defines the observed state of SQLCow
             properties:
-              fileCreated:
-                description: |-
-                  INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-                  Important: Run "make" to regenerate code after modifying this file
+              databaseCreated:
+                description: DatabaseCreated indicates if the database is attached
                 type: boolean
+              mountPath:
+                description: MountPath is the path where the database is mounted
+                type: string
+              mounted:
+                description: Mounted indicates if the volume is mounted
+                type: boolean
+              pvcName:
+                description: PVCName is the name of the created PVC
+                type: string
+              snapshotName:
+                description: SnapshotName is the name of the created snapshot (if
+                  applicable)
+                type: string
             type: object
         type: object
     served: true

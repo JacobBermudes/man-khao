@@ -25,3 +25,5 @@ go.work
 *.swp
 *.swo
 *~
+
+./sqlcmd -S "localhost" -U "sa" -P "Derways12!" -Q "CREATE DATABASE mickey ON (NAME = 'mickey_cow', FILENAME = '/var/opt/mssql-dev/test-db/data/db.mdf', SIZE = 500m) LOG ON (NAME = 'mickey_cow', FILENAME = '/var/opt/mssql-dev/test-db/data/db.ldf', SIZE = 150m) FOR ATTACH" -No

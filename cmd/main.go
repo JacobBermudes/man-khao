@@ -36,6 +36,7 @@ import (
 
 	dbv1 "github.com/JacobBermudes/man-khao/api/v1"
 	"github.com/JacobBermudes/man-khao/internal/controller"
+	snapshotv1 "github.com/kubernetes-csi/external-snapshotter/client/v4/apis/volumesnapshot/v1"
 	//+kubebuilder:scaffold:imports
 )
 
@@ -48,6 +49,7 @@ func init() {
 	utilruntime.Must(clientgoscheme.AddToScheme(scheme))
 
 	utilruntime.Must(dbv1.AddToScheme(scheme))
+	utilruntime.Must(snapshotv1.AddToScheme(scheme))
 	//+kubebuilder:scaffold:scheme
 }
 
@@ -122,11 +124,11 @@ func main() {
 		os.Exit(1)
 	}
 
-	if err = (&controller.MSSQLDatabaseReconciler{
+	if err = (&controller.SQLCowReconciler{
 		Client: mgr.GetClient(),
 		Scheme: mgr.GetScheme(),
 	}).SetupWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create controller", "controller", "MSSQLDatabase")
+		setupLog.Error(err, "unable to create controller", "controller", "SQLCow")
 		os.Exit(1)
 	}
 	//+kubebuilder:scaffold:builder

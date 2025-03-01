@@ -1,28 +1,44 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: test-pod
+  name: mssql
+  namespace: man-khao-system
 spec:
-  serviceName: test-service
-  replicas: 1
+  serviceName: mssql-service
+  replicas: 1  # Масштабирование
   selector:
     matchLabels:
-      app: test
+      app: mssql
   template:
     metadata:
       labels:
-        app: test
+        app: mssql
     spec:
       containers:
-      - name: test
-        image: busybox
-        command: ["sh", "-c", "sleep infinity"]
+      - name: mssql
+        image: mcr.microsoft.com/mssql/server:2019-latest
+        env:
+        - name: ACCEPT_EULA
+          value: "Y"
+        - name: SA_PASSWORD
+          value: "KorovaIvanovna12!"
+        ports:
+        - containerPort: 1433
+          name: mssql
         volumeMounts:
-        - name: data
-          mountPath: /data
+        - name: mssql-data
+          mountPath: /var/opt/mssql
+        - name: mssql-cow-mount
+          mountPath: /cow
+        securityContext:
+          capabilities:
+            add: ["SYS_ADMIN"]
+      volumes:
+      - name: mssql-cow-mount
+        emptyDir: {}
   volumeClaimTemplates:
   - metadata:
-      name: data
+      name: mssql-data
     spec:
       accessModes: ["ReadWriteOnce"]
       resources:
@@ -33,10 +49,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: test-service
+  name: mssql-service
 spec:
   ports:
-  - port: 80
+  - port: 1433
+    targetPort: 1433
   selector:
-    app: test
+    app: mssql
   clusterIP: None

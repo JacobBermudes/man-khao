@@ -5,12 +5,12 @@ metadata:
   labels:
     app.kubernetes.io/name: man-khao
     app.kubernetes.io/managed-by: kustomize
-  name: mssqldatabase-editor-role
+  name: SQLCow-editor-role
 rules:
 - apiGroups:
   - db.buffalo.com
   resources:
-  - mssqldatabases
+  - "SQLCow"
   verbs:
   - create
   - delete
@@ -22,6 +22,6 @@ rules:
 - apiGroups:
   - db.buffalo.com
   resources:
-  - mssqldatabases/status
+  - SQLCow/status
   verbs:
   - get

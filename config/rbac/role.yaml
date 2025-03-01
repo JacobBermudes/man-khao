@@ -5,9 +5,35 @@ metadata:
   name: manager-role
 rules:
 - apiGroups:
+  - ""
+  resources:
+  - persistentvolumeclaims
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - pods/exec
+  verbs:
+  - create
+- apiGroups:
   - db.buffalo.com
   resources:
-  - mssqldatabases
+  - sqlcows
   verbs:
   - create
   - delete
@@ -19,14 +45,20 @@ rules:
 - apiGroups:
   - db.buffalo.com
   resources:
-  - mssqldatabases/finalizers
-  verbs:
-  - update
-- apiGroups:
-  - db.buffalo.com
-  resources:
-  - mssqldatabases/status
+  - sqlcows/status
   verbs:
   - get
   - patch
   - update
+- apiGroups:
+  - snapshot.storage.k8s.io
+  resources:
+  - volumesnapshots
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch

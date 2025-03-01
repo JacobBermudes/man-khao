@@ -30,7 +30,7 @@ import (
 	dbv1 "github.com/JacobBermudes/man-khao/api/v1"
 )
 
-var _ = Describe("MSSQLDatabase Controller", func() {
+var _ = Describe("SQLCow Controller", func() {
 	Context("When reconciling a resource", func() {
 		const resourceName = "test-resource"
 
@@ -40,13 +40,13 @@ var _ = Describe("MSSQLDatabase Controller", func() {
 			Name:      resourceName,
 			Namespace: "default", // TODO(user):Modify as needed
 		}
-		mssqldatabase := &dbv1.MSSQLDatabase{}
+		sqlcow := &dbv1.SQLCow{}
 
 		BeforeEach(func() {
-			By("creating the custom resource for the Kind MSSQLDatabase")
-			err := k8sClient.Get(ctx, typeNamespacedName, mssqldatabase)
+			By("creating the custom resource for the Kind SQLCow")
+			err := k8sClient.Get(ctx, typeNamespacedName, sqlcow)
 			if err != nil && errors.IsNotFound(err) {
-				resource := &dbv1.MSSQLDatabase{
+				resource := &dbv1.SQLCow{
 					ObjectMeta: metav1.ObjectMeta{
 						Name:      resourceName,
 						Namespace: "default",
@@ -59,16 +59,16 @@ var _ = Describe("MSSQLDatabase Controller", func() {
 
 		AfterEach(func() {
 			// TODO(user): Cleanup logic after each test, like removing the resource instance.
-			resource := &dbv1.MSSQLDatabase{}
+			resource := &dbv1.SQLCow{}
 			err := k8sClient.Get(ctx, typeNamespacedName, resource)
 			Expect(err).NotTo(HaveOccurred())
 
-			By("Cleanup the specific resource instance MSSQLDatabase")
+			By("Cleanup the specific resource instance SQLCow")
 			Expect(k8sClient.Delete(ctx, resource)).To(Succeed())
 		})
 		It("should successfully reconcile the resource", func() {
 			By("Reconciling the created resource")
-			controllerReconciler := &MSSQLDatabaseReconciler{
+			controllerReconciler := &SQLCowReconciler{
 				Client: k8sClient,
 				Scheme: k8sClient.Scheme(),
 			}
